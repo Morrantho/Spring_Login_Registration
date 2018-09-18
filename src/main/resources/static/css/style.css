@@ -1,0 +1,42 @@
+@charset "UTF-8";
+
+body{
+	background-color:rgba(34,45,50,1);
+}
+
+.flex{
+	display:flex;
+}
+
+.error{
+	color:#e74c3c;
+}
+
+.success{
+	color:#2ecc71;
+}
+
+.newForm{
+	padding:1%;
+	margin:1%;
+	width:30%;
+	background-color:rgba(41,53,59,1);
+}
+
+.newForm input{
+	width:95%;
+	height:32px;
+	margin:1%;
+	padding:1%;
+}
+
+input{
+	background-color:rgba(36,48,53,1);
+}
+
+.blue{
+	color:rgb(72,185,199);
+}
+.white{
+	color:rgb(255,255,255);
+}
