@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.codingdojo.loginreg.models.User;
 import com.codingdojo.loginreg.services.UserService;
+import com.codingdojo.loginreg.validators.UserValidator;
 
 @Controller
 @RequestMapping("/users")
@@ -33,26 +34,15 @@ public class UserController {
 	
 	@PostMapping("")
 	public String register( @Valid @ModelAttribute("user") User user, BindingResult res, Model model ){
-		if(res.hasErrors()) {
+		UserValidator validator = new UserValidator(uS,user,res);
+		
+		if(res.hasErrors()){
 			return "register";
 		}else {
-			if(!user.getPassword().equals(user.getConfirm()) ) {
-				System.out.println("PASSWORDS DONT MATCH");
-				model.addAttribute("userError","Password and Password Confirmation must match!");				
-				return "register";
-			}else {
-				String pw = BCrypt.hashpw(user.getPassword(),BCrypt.gensalt());
-				user.setPassword(pw);				
-				User exists = uS.findByEmail(user.getEmail());
-				
-				if(exists != null) {
-					model.addAttribute("userError","A user with this email already exists!");
-					return "register";
-				}else {
-					uS.create(user);
-					return "redirect:/users";				
-				}				
-			}
+			String pw = BCrypt.hashpw(user.getPassword(),BCrypt.gensalt());
+			user.setPassword(pw);				
+			uS.create(user);
+			return "redirect:/users";
 		}
 	}
 	
